@@ -20,7 +20,7 @@ Forge will fulfill its own dependencies, if ```pip``` is available. If it is not
 Requirements
 ------------
 * An S3 bucket to store roles in.
-* An IAM Role to apply to autonomous servers, with a User Policy granting access to the above bucket.
+* An IAM Role to apply to autonomous servers, with a [User Policy](https://github.com/colstrom/forge/blob/master/examples/policy.json) granting access to the above bucket.
 * (optional) One or more Ansible Roles in the bucket.
 
 Self-Discovery via Conventions

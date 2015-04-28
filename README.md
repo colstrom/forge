@@ -1,6 +1,6 @@
 # forge
 
-Opinionated system enabling autonomous instances.
+Convention-Driven Instance Autonomy for EC2
 
 Description
 -----------

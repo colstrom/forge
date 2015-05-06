@@ -46,7 +46,7 @@ How to Use (Hardcore Mode)
 --------------------------
 If you're cool with allowing arbitrary code from the internet to run with root privileges with no human oversight, you can do this:
 
-```curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python```
+```curl https://raw.github.com/telusdigital/forge/master/bootstrap.py | python```
 
 How to Use (Recommended)
 ------------------------

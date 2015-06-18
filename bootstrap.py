@@ -155,6 +155,8 @@ def self_provision():
     """ Bring it all together and follow your dreams, little server! """
     install_with_pip(['ansible', 'awscli', 'boto'])
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
+    download_from_s3('ssh.ed25519', '/root/.ssh/id_ed25519')
+    download_from_s3('ssh.rsa', '/root/.ssh/id_rsa')
 
     for playbook in applicable_playbooks():
         get_dependencies(playbook)

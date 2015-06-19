@@ -150,16 +150,19 @@ def execute(playbook):
     download_from_s3(playbook + 'playbook.yml', path + 'playbook.yml')
     call('ansible-playbook ' + path + 'playbook.yml', shell=True)
 
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
     download_from_s3('ssh_config', '/etc/ansible/ssh_config')
 
+
 def get_credentials():
     """ Fetches credentials needed for private repositories """
     download_from_s3('ssh.ed25519', '/root/.ssh/id_ed25519')
     download_from_s3('ssh.rsa', '/root/.ssh/id_rsa')
+
 
 def self_provision():
     """ Bring it all together and follow your dreams, little server! """

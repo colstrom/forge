@@ -158,10 +158,20 @@ def configure_ansible():
     download_from_s3('ssh_config', '/etc/ansible/ssh_config')
 
 
+def set_permissions(files, mode):
+    from os import chmod
+    for filename in files:
+        try:
+            chmod(filename, mode)
+        except OSError:
+            pass
+
+
 def get_credentials():
     """ Fetches credentials needed for private repositories """
     download_from_s3('ssh.ed25519', '/root/.ssh/id_ed25519')
     download_from_s3('ssh.rsa', '/root/.ssh/id_rsa')
+    set_permissions(['/root/.ssh/id_ed25519', '/root/.ssh/id_rsa'], 0400)
 
 
 def self_provision():

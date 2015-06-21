@@ -182,6 +182,14 @@ def in_known_hosts(host_key):
     return False
 
 
+def add_to_known_hosts(host_key):
+    """ Appends line to a file """
+    if in_known_hosts(host_key):
+        return
+    with open('/etc/ssh/known_hosts', 'a') as known_hosts:
+        known_hosts.write(host_key + "\n")
+
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')

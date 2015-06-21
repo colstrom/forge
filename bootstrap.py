@@ -170,6 +170,18 @@ def ssh_host_key(host, port=22):
         key=key.get_base64())
 
 
+def in_known_hosts(host_key):
+    """ Checks if a key is in known_hosts """
+    from os import path
+    if not path.isfile('/etc/ssh/known_hosts'):
+        return False
+    with open('/etc/ssh/known_hosts', 'r') as known_hosts:
+        for entry in known_hosts:
+            if host_key in entry:
+                return True
+    return False
+
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')

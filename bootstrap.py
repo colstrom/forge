@@ -173,9 +173,9 @@ def ssh_host_key(host, port=22):
 def in_known_hosts(host_key):
     """ Checks if a key is in known_hosts """
     from os import path
-    if not path.isfile('/etc/ssh/known_hosts'):
+    if not path.isfile('/etc/ssh/ssh_known_hosts'):
         return False
-    with open('/etc/ssh/known_hosts', 'r') as known_hosts:
+    with open('/etc/ssh/ssh_known_hosts', 'r') as known_hosts:
         for entry in known_hosts:
             if host_key in entry:
                 return True
@@ -186,7 +186,7 @@ def add_to_known_hosts(host_key):
     """ Appends line to a file """
     if in_known_hosts(host_key):
         return
-    with open('/etc/ssh/known_hosts', 'a') as known_hosts:
+    with open('/etc/ssh/ssh_known_hosts', 'a') as known_hosts:
         known_hosts.write(host_key + "\n")
 
 

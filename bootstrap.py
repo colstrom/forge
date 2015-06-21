@@ -52,7 +52,7 @@ def download_from_s3(source, destination):
         bucket=detect('ForgeBucket'),
         file=source,
         save_to=destination
-        ), shell=True)
+    ), shell=True)
 
 
 def instance_metadata(item):
@@ -159,6 +159,7 @@ def configure_ansible():
 
 
 def set_permissions(files, mode):
+    """ Sets permissions on a list of files """
     from os import chmod
     for filename in files:
         try:

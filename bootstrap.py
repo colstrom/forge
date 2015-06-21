@@ -151,6 +151,14 @@ def execute(playbook):
     call('ansible-playbook ' + path + 'playbook.yml', shell=True)
 
 
+def ssh_keyscan(host):
+    """ Get the SSH host key from a remote server by connecting to it """
+    from paramiko import transport
+    with transport.Transport(host) as ssh:
+        ssh.start_client()
+        return ssh.get_remote_server_key()
+
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')

@@ -159,6 +159,17 @@ def ssh_keyscan(host):
         return ssh.get_remote_server_key()
 
 
+def ssh_host_key(host, port=22):
+    """ Get SSH host key, return string formatted for known_hosts """
+    if port != 22:
+        host = "{host}:{port}".format(host=host, port=port)
+    key = ssh_keyscan(host)
+    return "{host} {key_name} {key}".format(
+        host=host,
+        key_name=key.get_name(),
+        key=key.get_base64())
+
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')

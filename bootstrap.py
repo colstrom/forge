@@ -194,7 +194,8 @@ def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
-    download_from_s3('ssh_config', '/etc/ansible/ssh_config')
+    add_to_known_hosts(ssh_host_key('github.com'))
+    add_to_known_hosts(ssh_host_key('bitbucket.org'))
 
 
 def set_permissions(files, mode):

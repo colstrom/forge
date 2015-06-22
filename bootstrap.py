@@ -52,7 +52,7 @@ def download_from_s3(source, destination):
         bucket=detect('ForgeBucket'),
         file=source,
         save_to=destination
-        ), shell=True)
+    ), shell=True)
 
 
 def instance_metadata(item):
@@ -151,17 +151,68 @@ def execute(playbook):
     call('ansible-playbook ' + path + 'playbook.yml', shell=True)
 
 
+def ssh_keyscan(host):
+    """ Get the SSH host key from a remote server by connecting to it """
+    from paramiko import transport
+    with transport.Transport(host) as ssh:
+        ssh.start_client()
+        return ssh.get_remote_server_key()
+
+
+def ssh_host_key(host, port=22):
+    """ Get SSH host key, return string formatted for known_hosts """
+    if port != 22:
+        host = "{host}:{port}".format(host=host, port=port)
+    key = ssh_keyscan(host)
+    return "{host} {key_name} {key}".format(
+        host=host,
+        key_name=key.get_name(),
+        key=key.get_base64())
+
+
+def in_known_hosts(host_key):
+    """ Checks if a key is in known_hosts """
+    from os import path
+    if not path.isfile('/etc/ssh/ssh_known_hosts'):
+        return False
+    with open('/etc/ssh/ssh_known_hosts', 'r') as known_hosts:
+        for entry in known_hosts:
+            if host_key in entry:
+                return True
+    return False
+
+
+def add_to_known_hosts(host_key):
+    """ Appends line to a file """
+    if in_known_hosts(host_key):
+        return
+    with open('/etc/ssh/ssh_known_hosts', 'a') as known_hosts:
+        known_hosts.write(host_key + "\n")
+
+
 def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
-    download_from_s3('ssh_config', '/etc/ansible/ssh_config')
+    add_to_known_hosts(ssh_host_key('github.com'))
+    add_to_known_hosts(ssh_host_key('bitbucket.org'))
+
+
+def set_permissions(files, mode):
+    """ Sets permissions on a list of files """
+    from os import chmod
+    for filename in files:
+        try:
+            chmod(filename, mode)
+        except OSError:
+            pass
 
 
 def get_credentials():
     """ Fetches credentials needed for private repositories """
     download_from_s3('ssh.ed25519', '/root/.ssh/id_ed25519')
     download_from_s3('ssh.rsa', '/root/.ssh/id_rsa')
+    set_permissions(['/root/.ssh/id_ed25519', '/root/.ssh/id_rsa'], 0400)
 
 
 def self_provision():

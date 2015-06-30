@@ -131,22 +131,33 @@ def applicable_playbooks():
     return unique(playbooks)
 
 
-def temp_path(playbook):
-    """ Returns a flattened path under /tmp for a playbook """
+def flat_path(path):
+    """ Flattens a path by substituting dashes for slashes """
     import re
-    return '/tmp/' + re.sub('/', '-', playbook)
+    return re.sub('/', '-', path)
 
 
 def get_dependencies(playbook):
     """ Downloads and installs all roles required for a playbook to run """
-    path = temp_path(playbook)
+    path = '/tmp/' + flat_path(playbook)
     download_from_s3(playbook + 'dependencies.yml', path + 'dependencies.yml')
     call('ansible-galaxy install -ifr' + path + 'dependencies.yml', shell=True)
 
 
+def get_vault(playbook):
+    """ Downloads a vault file, and puts it where Ansible can find it. """
+    vault_name = flat_path(playbook)[:-1]
+    if len(vault_name) == 0:
+        vault_name = 'all'
+    vault_file = '/etc/ansible/group_vars/' + vault_name + '.yml'
+    download_from_s3(playbook + 'vault.yml', vault_file)
+    with open('/etc/ansible/hosts', 'a') as stream:
+        stream.writelines(["\n[" + vault_name + "]\n", 'localhost\n'])
+
+
 def execute(playbook):
     """ Downloads and executes a playbook. """
-    path = temp_path(playbook)
+    path = '/tmp/' + flat_path(playbook)
     download_from_s3(playbook + 'playbook.yml', path + 'playbook.yml')
     call('ansible-playbook ' + path + 'playbook.yml', shell=True)
 
@@ -194,6 +205,8 @@ def configure_ansible():
     """ Fetches ansible configurations from ForgeBucket """
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
+    download_from_s3('vault.key', '/etc/ansible/vault.key')
+    set_permissions(['/etc/ansible/vault.key'], 0400)
     add_to_known_hosts(ssh_host_key('github.com'))
     add_to_known_hosts(ssh_host_key('bitbucket.org'))
 
@@ -223,6 +236,7 @@ def self_provision():
 
     for playbook in applicable_playbooks():
         get_dependencies(playbook)
+        get_vault(playbook)
         execute(playbook)
 
 self_provision()

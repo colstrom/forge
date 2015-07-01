@@ -155,6 +155,13 @@ def get_vault(playbook):
         stream.writelines(["\n[" + vault_name + "]\n", 'localhost\n'])
 
 
+def configure_environment():
+    get_vault('')
+    with open('/etc/ansible/group_vars/local.yml', 'w+') as stream:
+        stream.write("\nproject: " + resource_tags()['Project'])
+        stream.write("\nenvironment_tier: " + resource_tags()['Environment'])
+
+
 def execute(playbook):
     """ Downloads and executes a playbook. """
     path = '/tmp/' + flat_path(playbook)
@@ -232,6 +239,7 @@ def self_provision():
     """ Bring it all together and follow your dreams, little server! """
     install_with_pip(['ansible', 'awscli', 'boto'])
     configure_ansible()
+    configure_environment()
     get_credentials()
 
     for playbook in applicable_playbooks():

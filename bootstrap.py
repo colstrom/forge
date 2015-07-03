@@ -156,6 +156,7 @@ def get_vault(playbook):
 
 
 def configure_environment():
+    """ Exposes information from Resource Tags in Ansible vars """
     get_vault('')
     with open('/etc/ansible/group_vars/local.yml', 'w+') as stream:
         stream.write("\nproject: " + resource_tags()['Project'])
@@ -236,13 +237,19 @@ def get_credentials():
     set_permissions(['/root/.ssh/id_ed25519', '/root/.ssh/id_rsa'], 0400)
 
 
-def self_provision():
-    """ Bring it all together and follow your dreams, little server! """
+def preconfigure():
+    """ Configure everything needed to configure everything else. """
     install_with_pip(['ansible', 'awscli', 'boto'])
     configure_ansible()
     configure_environment()
     get_credentials()
+    download_from_s3('bin/reforge', '/usr/local/sbin/reforge')
+    set_permissions(['/usr/local/sbin/reforge'], 0500)
 
+
+def self_provision():
+    """ Bring it all together and follow your dreams, little server! """
+    preconfigure()
     for playbook in applicable_playbooks():
         get_dependencies(playbook)
         get_vault(playbook)

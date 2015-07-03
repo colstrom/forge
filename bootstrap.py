@@ -160,6 +160,7 @@ def configure_environment():
     with open('/etc/ansible/group_vars/local.yml', 'w+') as stream:
         stream.write("\nproject: " + resource_tags()['Project'])
         stream.write("\nenvironment_tier: " + resource_tags()['Environment'])
+        stream.write("\nsystem_role: " + resource_tags()['Role'])
 
 
 def execute(playbook):

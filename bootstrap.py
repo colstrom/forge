@@ -128,7 +128,7 @@ def applicable_playbooks():
     playbooks = ['']                  # Base Playbook
     playbooks.append(project_path())  # Project Playbook
     playbooks.extend(role_paths())    # System Roles
-    return unique(playbooks)
+    return sorted(unique(playbooks), key=len)
 
 
 def flat_path(path):

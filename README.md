@@ -75,11 +75,16 @@ If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you
 ```s3cmd sync playbook-foo/ s3://telusdigital-forge/foo/```
 
 ### Rerun forge without reprovisioning
-Check https://github.com/telusdigital/forge
+* SSH into the server
+* Run `sudo reforge`
 
-CHECKING THAT EVERYTHING RAN PROPERLY
-
+### Checking that everything ran properly
 ```cat /var/log/cloud-init-output.log```
+
+### Troubleshooting
+Q: fatal: [localhost] => One or more undefined variables: 'domain' is undefined
+
+A: Add domain: teluswebteam.com to your infra playbook until we get it sorted out how this can be done better globally.
 
 License
 -------

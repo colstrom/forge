@@ -52,7 +52,7 @@ How to Use (Recommended)
 ------------------------
 If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you control.
 
-```curl https://YOUR_URL_HERE/bootstrap.py | python```
+```curl https://YOUR_URL_HERE/bootstrap.py | sudo python```
 
 ## Setting up your environment for playbook dev
 

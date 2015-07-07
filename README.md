@@ -54,31 +54,31 @@ If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you
 
 ```curl https://YOUR_URL_HERE/bootstrap.py | python```
 
-SETTING UP YOUR ENVIRONMENT FOR PLAYBOOK DEV
---------------------------------------------
-CREATING THE PLAYBOOK FROM SCRATCH
-----------------------------------
+## Setting up your environment for playbook dev
+
+### Creating the playbook from scratch
 * Create a new repository
 * Populate it with the Playbook Skeleton scripts
 * Make sure any vault files have your master vault password in the forge bucket
 
-TESTING CHANGES TO ROLES
-------------------------
+### Testing changes to roles
 * Make all your changes locally
 * Get them to a next server (test branches, rsync, etc...) in the `/etc/ansible/roles/username.rolename` path
 * Edit `/tmp/playbook-*.yaml` on the server to use your test role instead of telusdigital's
 * Use `ansible-playbook` to rerun the playbook manually
 
-SYNCING PLAYBOOKS TO FORGE
---------------------------
+### Syncing playbooks to forge
 ```pip install s3cmd```
+
 ```s3cmd --configure```
+
 ```s3cmd sync playbook-foo/ s3://telusdigital-forge/foo/```
 
-RERUN FORGE WITHOUT REPROVISIONING
-----------------------------------
+### Rerun forge without reprovisioning
 Check https://github.com/telusdigital/forge
+
 CHECKING THAT EVERYTHING RAN PROPERLY
+
 ```cat /var/log/cloud-init-output.log```
 
 License

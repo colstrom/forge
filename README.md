@@ -58,7 +58,7 @@ If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you
 
 ### Creating the playbook from scratch
 * Create a new repository
-* Populate it with the Playbook Skeleton scripts
+* Populate it with the [Playbook Skeleton](https://github.com/telusdigital/playbook-skeleton) scripts
 * Make sure any vault files have your master vault password in the forge bucket
 
 ### Testing changes to roles

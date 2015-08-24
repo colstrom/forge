@@ -167,8 +167,10 @@ def configure_environment():
 def execute(playbook):
     """ Downloads and executes a playbook. """
     path = '/tmp/' + flat_path(playbook)
-    download_from_s3(playbook + 'playbook.yml', path + 'playbook.yml')
-    call('ansible-playbook ' + path + 'playbook.yml', shell=True)
+    for hook in ['pre-', '', 'post-']:
+        filename = hook + 'playbook.yml'
+        download_from_s3(playbook + filename, path + filename)
+        call('ansible-playbook ' + path + filename, shell=True)
 
 
 def ssh_keyscan(host):

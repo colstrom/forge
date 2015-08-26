@@ -172,8 +172,11 @@ def record_exit(playbook, status):
 def execute(playbook):
     """ Downloads and executes a playbook. """
     path = '/tmp/' + flat_path(playbook)
-    download_from_s3(playbook + 'playbook.yml', path + 'playbook.yml')
-    record_exit(playbook, call('ansible-playbook ' + path + 'playbook.yml', shell=True))
+    for hook in ['pre-', '', 'post-']:
+        filename = hook + 'playbook.yml'
+        download_from_s3(playbook + filename, path + filename)
+        record_exit(playbook, call('ansible-playbook ' + path + filename, shell=True))
+
 
 
 def ssh_keyscan(host):
@@ -220,7 +223,8 @@ def configure_ansible():
     download_from_s3('ansible.hosts', '/etc/ansible/hosts')
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
     download_from_s3('vault.key', '/etc/ansible/vault.key')
-    set_permissions(['/etc/ansible/vault.key'], 0400)
+    files = ['/etc/ansible/ansible.cfg', '/etc/ansible/vault.key']
+    set_permissions(files, 0400)
     add_to_known_hosts(ssh_host_key('github.com'))
     add_to_known_hosts(ssh_host_key('bitbucket.org'))
 

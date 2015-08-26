@@ -52,7 +52,39 @@ How to Use (Recommended)
 ------------------------
 If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you control.
 
-```curl https://YOUR_URL_HERE/bootstrap.py | python```
+```curl https://YOUR_URL_HERE/bootstrap.py | sudo python```
+
+## Setting up your environment for playbook dev
+
+### Creating the playbook from scratch
+* Create a new repository
+* Populate it with the [Playbook Skeleton](https://github.com/telusdigital/playbook-skeleton) scripts
+* Make sure any vault files have your master vault password in the forge bucket
+
+### Testing changes to roles
+* Make all your changes locally
+* Get them to a next server (test branches, rsync, etc...) in the `/etc/ansible/roles/username.rolename` path
+* Edit `/tmp/playbook-*.yaml` on the server to use your test role instead of telusdigital's
+* Use `ansible-playbook` to rerun the playbook manually
+
+### Syncing playbooks to forge
+```pip install s3cmd```
+
+```s3cmd --configure```
+
+```s3cmd sync playbook-foo/ s3://telusdigital-forge/foo/```
+
+### Rerun forge without reprovisioning
+* SSH into the server
+* Run `sudo reforge`
+
+### Checking that everything ran properly
+```cat /var/log/cloud-init-output.log```
+
+### Troubleshooting
+Q: fatal: [localhost] => One or more undefined variables: 'domain' is undefined
+
+A: Add domain: teluswebteam.com to your infra playbook until we get it sorted out how this can be done better globally.
 
 License
 -------

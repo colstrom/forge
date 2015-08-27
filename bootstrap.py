@@ -178,7 +178,6 @@ def execute(playbook):
         record_exit(playbook, call('ansible-playbook ' + path + filename, shell=True))
 
 
-
 def ssh_keyscan(host):
     """ Get the SSH host key from a remote server by connecting to it """
     from paramiko import transport

@@ -154,7 +154,6 @@ def get_vault(playbook):
     with open('/etc/ansible/hosts', 'a') as stream:
         stream.writelines(["\n[" + vault_name + "]\n", 'localhost\n'])
 
-
 def configure_environment():
     """ Exposes information from Resource Tags in Ansible vars """
     get_vault('')
@@ -164,14 +163,21 @@ def configure_environment():
         stream.write("\nsystem_role: " + resource_tags()['Role'])
 
 
+def record_exit(playbook, exit_status):
+    """ Saves exit status of playbook for notfication purposes"""
+    playbook_name = flat_path(playbook + 'playbook' + '.status')
+    with open(playbook_name, 'w+') as stream:
+        stream.write(str(exit_status))
+
+
 def execute(playbook):
     """ Downloads and executes a playbook. """
     path = '/tmp/' + flat_path(playbook)
     for hook in ['pre-', '', 'post-']:
         filename = hook + 'playbook.yml'
         download_from_s3(playbook + filename, path + filename)
-        call('ansible-playbook ' + path + filename, shell=True)
-
+        exit_status = call('ansible-playbook ' + path + filename, shell=True)
+        record_exit(playbook, exit_status)
 
 def ssh_keyscan(host):
     """ Get the SSH host key from a remote server by connecting to it """

@@ -165,8 +165,9 @@ def configure_environment():
 
 def record_exit(playbook, exit_status):
     """ Saves exit status of playbook for notfication purposes"""
-    with open('/tmp/'+ playbook + 'playbook.status', 'w+') as stream:
-        stream.write(exit_status)
+    playbook_name = flat_path('/tmp/' + playbook + '.status')
+    with open(playbook_name, 'w+') as stream:
+        stream.write(str(exit_status))
 
 
 def execute(playbook):

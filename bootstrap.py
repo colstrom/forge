@@ -163,10 +163,10 @@ def configure_environment():
         stream.write("\nsystem_role: " + resource_tags()['Role'])
 
 
-def record_exit(playbook, status):
+def record_exit(playbook, exit_status):
     """ Saves exit status of playbook for notfication purposes"""
     with open('/tmp/'+ playbook + 'playbook.status', 'w+') as stream:
-        stream.write(status)
+        stream.write(exit_status)
 
 
 def execute(playbook):
@@ -175,8 +175,8 @@ def execute(playbook):
     for hook in ['pre-', '', 'post-']:
         filename = hook + 'playbook.yml'
         download_from_s3(playbook + filename, path + filename)
-        record_exit(playbook, call('ansible-playbook ' + path + filename, shell=True))
-
+        exit_status = call('ansible-playbook ' + path + filename, shell=True)
+        record_exit(playbook, exit_status)
 
 def ssh_keyscan(host):
     """ Get the SSH host key from a remote server by connecting to it """

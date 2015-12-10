@@ -55,7 +55,7 @@ An untagged instance with two security groups named `your-project-name-applicati
 * ForgeBucket can be provided as `FORGE_BUCKET` in the environment.
 * ForgeRegion can be provided as `FORGE_REGION` in the environment.
 
-Resource tags are considered explicit statements of intent, and discovery stops there. Everything else is a fallback.
+_Resource tags are considered explicit statements of intent, and discovery stops there. Everything else is a fallback._
 
 ## How to Use (Hardcore Mode)
 

@@ -48,13 +48,13 @@ Resource tags are considered explicit statements of intent, and discovery stops 
 
 ## How to Use (Hardcore Mode)
 
-If you're cool with allowing arbitrary code from the internet to run with root privileges with no human oversight, you can do this:
+If you are cool with allowing arbitrary code from the internet to run with root privileges with no human oversight, you can do this:
 
 ```curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python```
 
 ## How to Use (Recommended)
 
-If you'd prefer a more sane approach, upload ```bootstrap.py``` to somewhere you control.
+If you would prefer a more sane approach, upload ```bootstrap.py``` to somewhere you control.
 
 ```curl https://YOUR_URL_HERE/bootstrap.py | python```
 

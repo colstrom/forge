@@ -28,7 +28,7 @@ Forge will fulfill its own dependencies, if ```pip``` is available. If it is not
 
 ## Self-Discovery via Conventions
 
-Forge will attempt to figure out what needs to happen on its own. To do this, it relies on conventions enforced by the tools it was built to work alongside: ```meta/infrastructure``` and ```superluminal```. If you are not using these tools, Forge should work without hassle as long as you follow similar conventions.
+Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it was built to work alongside: ```meta/infrastructure``` and ```superluminal```. These tools are optional, and Forge should work without hassle as long as you follow similar conventions.
 
 An instance should have resource tags. Among these, we should expect to find:
 
@@ -48,13 +48,13 @@ Resource tags are considered explicit statements of intent, and discovery stops 
 
 ## How to Use (Hardcore Mode)
 
-If you are cool with allowing arbitrary code from the internet to run with root privileges with no human oversight, you can do this:
+If running arbitrary code from the internet with root privileges and no human oversight excites you, this should work.
 
 ```curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python```
 
 ## How to Use (Recommended)
 
-If you would prefer a more sane approach, upload ```bootstrap.py``` to somewhere you control.
+For a more reasonable approach, upload ```bootstrap.py``` to somewhere you control.
 
 ```curl https://YOUR_URL_HERE/bootstrap.py | python```
 

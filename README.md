@@ -6,6 +6,7 @@ Description
 -----------
 
 Forge is designed to facilitate autonomous server configuration. At first boot, a server should execute the bootstrap code, which will in turn:
+
 * Install the tools required for the rest of the code, using pip.
 * Determine the purpose of the server, using a handful of APIs.
 * Download any playbooks that are applicable to the server, install their dependent roles, and execute them.
@@ -15,12 +16,14 @@ _Forge is only actively tested against Amazon Web Services (AWS)._
 Dependencies
 ------------
 Forge will fulfill its own dependencies, if ```pip``` is available. If it is not, the following python packages must be available.
+
 * [ansible](https://github.com/ansible/ansible/)
 * [awscli](https://aws.amazon.com/cli/)
 * [boto](https://boto.readthedocs.org/)
 
 Requirements
 ------------
+
 * An S3 bucket to store roles in.
 * An IAM Role to apply to autonomous servers, with a [User Policy](https://github.com/colstrom/forge/blob/master/examples/policy.json) granting access to the above bucket.
 * (optional) One or more Ansible Roles in the bucket.
@@ -30,6 +33,7 @@ Self-Discovery via Conventions
 Forge will attempt to figure out what needs to happen on its own. To do this, it relies on conventions enforced by the tools it was built to work alongside: ```meta/infrastructure``` and ```superluminal```. If you are not using these tools, Forge should work without hassle as long as you follow similar conventions.
 
 An instance should have resource tags. Among these, we should expect to find:
+
 * ```Project```: The project this instance belongs to.
 * ```Role```: The purpose of this specific instance, within that project.
 * ```ForgeBucket```: The name of the S3 bucket Forge should pull from.

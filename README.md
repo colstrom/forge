@@ -16,7 +16,7 @@ _Forge is only actively tested against Amazon Web Services (AWS)._
 
 ## Dependencies
 
-Forge will fulfill its own dependencies, if ```pip``` is available. If it is not, the following python packages must be available.
+Forge will fulfill its own dependencies, if `pip` is available. If it is not, the following python packages must be available.
 
 * [ansible](https://github.com/ansible/ansible/)
 * [awscli](https://aws.amazon.com/cli/)
@@ -39,17 +39,17 @@ These tools are optional, and Forge should work as long as you follow similar co
 
 An instance should have resource tags. Among these, we should expect to find:
 
-* ```Project```: The project this instance belongs to.
-* ```Role```: The purpose of this specific instance, within that project.
-* ```ForgeBucket```: The name of the S3 bucket Forge should pull from.
-* ```ForgeRegion```: Which region is ForgeBucket found in?
+* `Project`: The project this instance belongs to.
+* `Role`: The purpose of this specific instance, within that project.
+* `ForgeBucket`: The name of the S3 bucket Forge should pull from.
+* `ForgeRegion`: Which region is ForgeBucket found in?
 
-If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named like ```your-project-name-role```, and infers 'implicit tags' from this. Additional data can be provided via environment variables. If the instance has two security groups named ```['your-project-name-application', 'your-project-name-managed']```
+If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named like `your-project-name-role`, and infers 'implicit tags' from this. Additional data can be provided via environment variables. If the instance has two security groups named `your-project-name-application` and  `your-project-name-managed`:
 
-* Project will be ```'your-project-name'```
-* Role will be ```['application', 'managed']``` and both will be configured.
-* ForgeBucket can be provided as ```FORGE_BUCKET``` in the environment.
-* ForgeRegion can be provided as ```FORGE_REGION``` in the environment.
+* Project will be `your-project-name`
+* Role will be `['application', 'managed']` and both will be configured.
+* ForgeBucket can be provided as `FORGE_BUCKET` in the environment.
+* ForgeRegion can be provided as `FORGE_REGION` in the environment.
 
 Resource tags are considered explicit statements of intent, and discovery stops there. Everything else is a fallback.
 
@@ -57,13 +57,17 @@ Resource tags are considered explicit statements of intent, and discovery stops 
 
 If running arbitrary code from the internet with root privileges and no human oversight excites you, this should work.
 
-```curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python```
+```
+curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python
+```
 
 ## How to Use (Recommended)
 
 For a more reasonable approach, upload ```bootstrap.py``` to somewhere you control.
 
-```curl https://YOUR_URL_HERE/bootstrap.py | python```
+```
+curl https://YOUR_URL_HERE/bootstrap.py | python
+```
 
 ## License
 

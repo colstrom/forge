@@ -39,10 +39,12 @@ These tools are optional, and Forge should work as long as you follow similar co
 
 An instance should have resource tags. Among these, we should expect to find:
 
-* `Project`: The project this instance belongs to.
-* `Role`: The purpose of this specific instance, within that project.
-* `ForgeBucket`: The name of the S3 bucket Forge should pull from.
-* `ForgeRegion`: Which region is ForgeBucket found in?
+| Resource Tag  | Description
+|---------------|------------
+| `Project`     | The project this instance belongs to.
+| `Role`        | The purpose of this specific instance, within that project.
+| `ForgeBucket` | The name of the S3 bucket Forge should pull from.
+| `ForgeRegion` | The region `ForgeBucket` can be found in.
 
 If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named as `your-project-name-role`, and infers implicit tags from this. Additional data can be provided via environment variables.
 
@@ -51,8 +53,8 @@ If sufficient resource tags are not present, Forge will make reasonable guesses.
 An untagged instance with two security groups named `your-project-name-application` and  `your-project-name-managed`.
 
 * Project will be `your-project-name`.
-* Role will be `['application', 'managed']` and both will be configured.
 * ForgeBucket can be provided as `FORGE_BUCKET` in the environment.
+* Role will be `['application', 'managed']` and both will be configured.
 * ForgeRegion can be provided as `FORGE_REGION` in the environment.
 
 _Resource tags are considered explicit statements of intent, and discovery stops there. Everything else is a fallback._

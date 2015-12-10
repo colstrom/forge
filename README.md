@@ -44,9 +44,13 @@ An instance should have resource tags. Among these, we should expect to find:
 * `ForgeBucket`: The name of the S3 bucket Forge should pull from.
 * `ForgeRegion`: Which region is ForgeBucket found in?
 
-If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named like `your-project-name-role`, and infers 'implicit tags' from this. Additional data can be provided via environment variables. If the instance has two security groups named `your-project-name-application` and  `your-project-name-managed`:
+If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named as `your-project-name-role`, and infers implicit tags from this. Additional data can be provided via environment variables.
 
-* Project will be `your-project-name`
+### Example
+
+An untagged instance with two security groups named `your-project-name-application` and  `your-project-name-managed`.
+
+* Project will be `your-project-name`.
 * Role will be `['application', 'managed']` and both will be configured.
 * ForgeBucket can be provided as `FORGE_BUCKET` in the environment.
 * ForgeRegion can be provided as `FORGE_REGION` in the environment.

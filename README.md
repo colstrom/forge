@@ -1,14 +1,16 @@
 # forge
 
-Convention-Driven Instance Autonomy for EC2
+Convention Driven Instance Autonomy
 
 Description
 -----------
 
 Forge is designed to facilitate autonomous server configuration. At first boot, a server should execute the bootstrap code, which will in turn:
 * Install the tools required for the rest of the code, using pip.
-* Determine the purpose of the server, using a handful of AWS APIs.
+* Determine the purpose of the server, using a handful of APIs.
 * Download any playbooks that are applicable to the server, install their dependent roles, and execute them.
+
+_Forge is only actively tested against Amazon Web Services (AWS)._
 
 Dependencies
 ------------

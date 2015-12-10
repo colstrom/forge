@@ -32,8 +32,8 @@ Forge will fulfill its own dependencies, if ```pip``` is available. If it is not
 
 Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it was built to work alongside.
 
-* ```[https://github.com/colstrom/ansible-aws-infrastructure](aws-infrastructure)```
-* ```[https://github.com/colstrom/superluminal](superluminal)```
+* [https://github.com/colstrom/ansible-aws-infrastructure](aws-infrastructure)
+* [https://github.com/colstrom/superluminal](superluminal)
 
 These tools are optional, and Forge should work as long as you follow similar conventions.
 

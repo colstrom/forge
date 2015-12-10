@@ -8,7 +8,9 @@ Forge is designed to facilitate autonomous server configuration. At first boot, 
 
 * Install the tools required for the rest of the code, using pip.
 * Determine the purpose of the server, using a handful of APIs.
-* Download any playbooks that are applicable to the server, install their dependent roles, and execute them.
+* Download any playbooks that are applicable to the server.
+* Install any Ansible roles those playbooks depend on.
+* Apply any playbooks downloaded in this way.
 
 _Forge is only actively tested against Amazon Web Services (AWS)._
 

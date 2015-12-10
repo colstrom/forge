@@ -28,7 +28,12 @@ Forge will fulfill its own dependencies, if ```pip``` is available. If it is not
 
 ## Self-Discovery via Conventions
 
-Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it was built to work alongside: ```meta/infrastructure``` and ```superluminal```. These tools are optional, and Forge should work without hassle as long as you follow similar conventions.
+Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it was built to work alongside.
+
+* ```[https://github.com/colstrom/ansible-aws-infrastructure](aws-infrastructure)```
+* ```[https://github.com/colstrom/superluminal](superluminal)```
+
+These tools are optional, and Forge should work without hassle as long as you follow similar conventions.
 
 An instance should have resource tags. Among these, we should expect to find:
 

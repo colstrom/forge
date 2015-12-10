@@ -37,7 +37,9 @@ Forge will attempt to figure out what needs to happen on its own. To do this, Fo
 
 These tools are optional, and Forge should work as long as you follow similar conventions.
 
-An instance should have resource tags. Among these, we should expect to find:
+### Supported Resource Tags
+
+Forge understands several resource tags, and expects an instance to have them.
 
 | Resource Tag  | Description
 |---------------|------------

@@ -22,6 +22,12 @@ Forge will fulfill its own dependencies, if `pip` is available. If it is not, th
 * [awscli](https://aws.amazon.com/cli/)
 * [boto](https://boto.readthedocs.org/)
 
+## Compatibility
+
+Forge is tested against the current Long-Term Support release of Ubuntu. However, it should work on any Linux with Python.
+
+**Forge 1.x does not work with Python3.** This can be resolved with a minor change which breaks Python 2.x compatibility.
+
 ## Requirements
 
 * An S3 bucket to store roles in.

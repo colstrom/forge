@@ -24,9 +24,9 @@ Forge will fulfill its own dependencies, if `pip` is available. If it is not, th
 
 ## Compatibility
 
-Forge is tested against the current Long-Term Support release of Ubuntu. However, it should work on any Linux with Python.
+Forge testing uses the current Long-Term Support release of Ubuntu. However, it should run on any Linux with Python.
 
-**Forge 1.x does not work with Python3.** This can be resolved with a minor change which breaks Python 2.x compatibility.
+**Forge 1.x is not compatible with Python3.** This is resolvable with a minor change which breaks Python 2.x compatibility.
 
 ## Requirements
 
@@ -36,40 +36,40 @@ Forge is tested against the current Long-Term Support release of Ubuntu. However
 
 ## Self-Discovery via Conventions
 
-Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it was built to work alongside.
+Forge will attempt to figure out what needs to happen on its own. To do this, Forge relies on conventions enforced by the tools it is typically used with.
 
 * [https://github.com/colstrom/ansible-aws-infrastructure](aws-infrastructure)
 * [https://github.com/colstrom/superluminal](superluminal)
 
-These tools are optional, and Forge should work as long as you follow similar conventions.
+These tools are optional, and Forge should be fine as long as you follow similar conventions.
 
 ### Supported Resource Tags
 
-Forge understands several resource tags, and expects an instance to have them.
+Forge understands specific resource tags, and expects an instance to have them.
 
 | Resource Tag  | Description
 |---------------|------------
 | `Project`     | The project this instance belongs to.
 | `Role`        | The purpose of this specific instance, within that project.
 | `ForgeBucket` | The name of the S3 bucket Forge should pull from.
-| `ForgeRegion` | The region `ForgeBucket` can be found in.
+| `ForgeRegion` | The region to find `ForgeBucket` in.
 
-If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security groups are named as `your-project-name-role`, and infers implicit tags from this. Additional data can be provided via environment variables.
+If sufficient resource tags are not present, Forge will make reasonable guesses. It assumes security group naming like `your-project-name-role`, and infers implicit tags from this. Environment variables can provide additional data.
 
 ### Example
 
 An untagged instance with two security groups named `your-project-name-application` and  `your-project-name-managed`.
 
 * Project will be `your-project-name`.
-* ForgeBucket can be provided as `FORGE_BUCKET` in the environment.
-* Role will be `['application', 'managed']` and both will be configured.
-* ForgeRegion can be provided as `FORGE_REGION` in the environment.
+* ForgeBucket will read `FORGE_BUCKET` from the environment.
+* Role will be `['application', 'managed']`, and Forge will configure both.
+* ForgeRegion will read `FORGE_REGION` from the environment.
 
-_Resource tags are considered explicit statements of intent, and discovery stops there. Everything else is a fallback._
+_Resource tags are explicit statements of intent, and discovery stops there. Everything else is a fallback._
 
 ## How to Use (Hardcore Mode)
 
-If running arbitrary code from the internet with root privileges and no human oversight excites you, this should work.
+If running arbitrary code from the internet with root privileges and no human oversight excites you, this should do it.
 
 ```
 curl https://raw.github.com/colstrom/forge/master/bootstrap.py | python

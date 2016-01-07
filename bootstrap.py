@@ -224,7 +224,7 @@ def configure_ansible():
     download_from_s3('ansible.cfg', '/etc/ansible/ansible.cfg')
     download_from_s3('vault.key', '/etc/ansible/vault.key')
     files = ['/etc/ansible/ansible.cfg', '/etc/ansible/vault.key']
-    set_permissions(files, 0400)
+    set_permissions(files, 400)
     add_to_known_hosts(ssh_host_key('github.com'))
     add_to_known_hosts(ssh_host_key('bitbucket.org'))
 
@@ -243,7 +243,7 @@ def get_credentials():
     """ Fetches credentials needed for private repositories """
     download_from_s3('ssh.ed25519', '/root/.ssh/id_ed25519')
     download_from_s3('ssh.rsa', '/root/.ssh/id_rsa')
-    set_permissions(['/root/.ssh/id_ed25519', '/root/.ssh/id_rsa'], 0400)
+    set_permissions(['/root/.ssh/id_ed25519', '/root/.ssh/id_rsa'], 400)
 
 
 def preconfigure():
@@ -253,7 +253,7 @@ def preconfigure():
     configure_environment()
     get_credentials()
     download_from_s3('bin/reforge', '/usr/local/sbin/reforge')
-    set_permissions(['/usr/local/sbin/reforge'], 0500)
+    set_permissions(['/usr/local/sbin/reforge'], 500)
 
 
 def self_provision():

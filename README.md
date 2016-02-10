@@ -1,5 +1,7 @@
 # forge
 
+[![Code Climate](https://codeclimate.com/github/telusdigital/forge/badges/gpa.svg)](https://codeclimate.com/github/telusdigital/forge)
+
 Convention Driven Instance Autonomy
 
 ## Description

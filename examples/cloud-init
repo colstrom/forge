@@ -7,4 +7,4 @@ packages:
  - python-pip
  - git
 runcmd:
- - curl https://raw.githubusercontent.com/telusdigital/forge/master/bootstrap.py | python
+ - curl https://raw.githubusercontent.com/colstrom/forge/master/bootstrap.py | python

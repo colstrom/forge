@@ -20,8 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import argparse
 from subprocess import call
-
 
 def install_with_pip(packages):
     """ Installs packages with pip """
@@ -140,7 +140,8 @@ def flat_path(path):
 def get_dependencies(playbook):
     """ Downloads and installs all roles required for a playbook to run """
     path = '/tmp/' + flat_path(playbook)
-    download_from_s3(playbook + 'dependencies.yml', path + 'dependencies.yml')
+    if not args.skip_download:
+        download_from_s3(playbook + 'dependencies.yml', path + 'dependencies.yml')
     call('ansible-galaxy install -ifr' + path + 'dependencies.yml', shell=True)
 
 
@@ -150,7 +151,8 @@ def get_vault(playbook):
     if len(vault_name) == 0:
         vault_name = 'all'
     vault_file = '/etc/ansible/group_vars/' + vault_name + '.yml'
-    download_from_s3(playbook + 'vault.yml', vault_file)
+    if not args.skip_download:
+        download_from_s3(playbook + 'vault.yml', vault_file)
     with open('/etc/ansible/hosts', 'a') as stream:
         stream.writelines(["\n[" + vault_name + "]\n", 'localhost\n'])
 
@@ -175,7 +177,8 @@ def execute(playbook):
     path = '/tmp/' + flat_path(playbook)
     for hook in ['pre-', '', 'post-']:
         filename = hook + 'playbook.yml'
-        download_from_s3(playbook + filename, path + filename)
+        if not args.skip_download:
+            download_from_s3(playbook + filename, path + filename)
         exit_status = call('ansible-playbook ' + path + filename, shell=True)
         record_exit(playbook, exit_status)
 
@@ -258,10 +261,23 @@ def preconfigure():
 
 def self_provision():
     """ Bring it all together and follow your dreams, little server! """
-    preconfigure()
+    if not args.skip_preconfigure:
+        preconfigure()
     for playbook in applicable_playbooks():
+        if not playbook and args.skip_core_playbook:
+            continue
+        if playbook == project_path() and args.skip_base_playbook:
+            continue
         get_dependencies(playbook)
         get_vault(playbook)
         execute(playbook)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--skip-preconfigure', action='store_true', help='Skip configuration')
+parser.add_argument('--skip-core-playbook', action='store_true', help='Skip core playbook');
+parser.add_argument('--skip-base-playbook', action='store_true', help='Skip base playbook');
+parser.add_argument('--skip-download', action='store_true', help='Skip download, so you can test the playbook in /tmp');
+args = parser.parse_args()
 
 self_provision()
